@@ -34,6 +34,26 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- AGGRESSIVE HEATWAVE GLOW (Dark) --- */
+        .glow-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; overflow: hidden; pointer-events: none;
+            filter: blur(80px); opacity: 0.4;
+            transform: translateY(var(--scroll-y, 0px)); /* Parallax */
+            will-change: transform;
+        }
+        .glow-orb {
+            position: absolute; border-radius: 50%; mix-blend-mode: screen;
+            animation: pulseGlow infinite alternate ease-in-out;
+        }
+        .glow-1 { width: 80vw; height: 80vw; background: radial-gradient(circle, var(--accent-red) 0%, transparent 70%); top: -20%; left: -20%; animation-duration: 8s; }
+        .glow-2 { width: 90vw; height: 90vw; background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%); bottom: -10%; right: -20%; animation-duration: 12s; animation-delay: -5s; }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.5; }
+            100% { transform: scale(1.2) translate(5vw, 5vh); opacity: 0.8; }
+        }
+
         /* --- BRUTALIST UI --- */
         .ui-layer {
             position: relative; z-index: 100; display: flex; flex-direction: column;
@@ -48,6 +68,7 @@
             display: inline-block; font-size: 12px; font-weight: 800; padding: 6px 12px;
             background: var(--accent-yellow); color: #000; margin-bottom: 20px;
             text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(248, 252, 106, 0.4);
         }
         
         h1.greeting {
@@ -56,10 +77,13 @@
             color: var(--text-main); 
             line-height: 0.85; text-transform: uppercase;
             letter-spacing: -0.05em;
+            text-shadow: 0 4px 20px rgba(255,255,255,0.2);
         }
         
         .module {
+            background: rgba(0,0,0,0.4);
             border: 2px solid var(--text-main);
+            backdrop-filter: blur(10px);
             padding: 24px; margin-bottom: 30px; position: relative;
         }
         
@@ -69,23 +93,45 @@
             text-transform: uppercase; margin-bottom: 25px; 
         }
         
-        .module-content { font-size: 16px; line-height: 1.5; font-weight: bold; }
-        
         .time-block {
             display: flex; justify-content: space-between; align-items: flex-start;
             border-bottom: 1px solid rgba(255,255,255,0.2);
             padding: 20px 0;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
+        .time-block:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); }
         .time-block:last-child { border-bottom: none; padding-bottom: 0; }
         
         .t-time { 
-            color: var(--accent-yellow); font-weight: 900; font-size: 16px; width: 65px; flex-shrink: 0;
+            color: var(--accent-yellow); font-weight: 900; font-size: 16px; width: 80px; flex-shrink: 0;
         }
         .t-desc { 
             color: var(--text-main); font-size: 16px; font-weight: bold; flex-grow: 1; text-transform: uppercase; line-height: 1.3;
         }
         .t-sub {
             display: block; color: #888; font-size: 12px; margin-top: 4px; letter-spacing: 1px;
+        }
+
+        .skool-link {
+            display: block; width: 100%; padding: 15px; text-align: center;
+            background: transparent; color: var(--text-main);
+            border: 2px solid var(--text-main);
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            text-decoration: none; transition: all 0.2s ease;
+        }
+        .skool-link:active { background: var(--text-main); color: #000; }
+
+        /* --- LOAD-IN ANIMATIONS --- */
+        .stagger-in {
+            opacity: 0; transform: translateY(30px);
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* PWA Install Prompt */
@@ -100,40 +146,48 @@
 </head>
 <body>
 
+<div class="glow-container" id="parallax-glow">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+</div>
+
 <div class="ui-layer">
-    <header>
+    <header class="stagger-in delay-1">
         <div class="status-badge" id="tier-badge">AUTHENTICATED</div>
         <h1 class="greeting" id="greeting-text">WELCOME,<br>GUEST</h1>
     </header>
 
-    <div class="module">
+    <div class="module stagger-in delay-2">
         <div class="module-title">ITINERARY</div>
         <div class="time-block">
-            <div class="t-time">08:00</div>
+            <div class="t-time">8:00 AM</div>
             <div class="t-desc">DOORS OPEN</div>
         </div>
         <div class="time-block">
-            <div class="t-time">09:00</div>
+            <div class="t-time">9:00 AM</div>
             <div class="t-desc">KEYNOTE: BRIAN</div>
         </div>
         <div class="time-block">
-            <div class="t-time" style="color: #FFF;">12:00</div>
+            <div class="t-time" style="color: #FFF;">12:00 PM</div>
             <div class="t-desc">LUNCH IS SERVED<span class="t-sub">TRAINING ROOM</span></div>
         </div>
         <div class="time-block">
-            <div class="t-time" style="color: var(--accent-red);">16:00</div>
+            <div class="t-time" style="color: var(--accent-red);">4:00 PM</div>
             <div class="t-desc">HAPPY HOUR<span class="t-sub">THE ATRIUM</span></div>
         </div>
         <div class="time-block">
-            <div class="t-time" style="color: var(--accent-blue);">17:30</div>
+            <div class="t-time" style="color: var(--accent-blue);">5:30 PM</div>
             <div class="t-desc">AFTER PARTY<span class="t-sub">THE VAULT (w/ DJ CEEJ)</span></div>
         </div>
     </div>
     
-    <div class="module" style="border-color: #333;">
-        <div class="module-content" style="color: #666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
-            TRANSMISSION 01: Keep this device active. Secure drops, location updates, and access codes will push here in real-time.
+    <div class="module stagger-in delay-3" style="border-color: #333; padding: 30px 24px;">
+        <div style="color: #999; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; text-align: center; font-weight: bold;">
+            THE MOVEMENT CONTINUES ONLINE
         </div>
+        <a href="https://www.skool.com/antivictim/about?ref=9d92655d890949bc86fc3f17ed416261" target="_blank" class="skool-link">
+            JOIN SKOOL COMMUNITY
+        </a>
     </div>
 </div>
 
@@ -151,6 +205,15 @@
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("greeting-text").innerHTML = "WELCOME,<br>" + name.toUpperCase();
         document.getElementById("tier-badge").innerText = tier + " CLEARANCE";
+    });
+
+    // Simple Parallax Effect on the Glow
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const glowContainer = document.getElementById('parallax-glow');
+        if (glowContainer) {
+            glowContainer.style.setProperty('--scroll-y', `${scrolled * 0.4}px`);
+        }
     });
 
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
