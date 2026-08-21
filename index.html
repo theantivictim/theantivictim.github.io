@@ -179,7 +179,7 @@ let selectedAttendee = null;
 
 async function fetchAttendees() {
   try {
-    const res = await fetch('/attendees');
+    const res = await fetch('https://hop-lewis-unfortunately-routing.trycloudflare.com/attendees');
     attendees = await res.json();
   } catch(err) {
     console.error("Failed to load attendees");
@@ -271,7 +271,7 @@ document.getElementById('checkin-form').addEventListener('submit', async (e) => 
   };
   
   try {
-    const res = await fetch('/submit', {
+    const res = await fetch('https://hop-lewis-unfortunately-routing.trycloudflare.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
