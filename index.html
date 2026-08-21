@@ -253,7 +253,7 @@
 
 <script>
     let allData = [];
-    const API_BASE = "https://antivictim-api.loca.lt";
+    const API_BASE = "https://script.google.com/macros/s/AKfycbxzKhoMl0DVaqYtJCGgVKySRQ8Z81ZTy3L2ns5hgBP6ALQgWqVmYt98-t9OczCxZlfB/exec";
 
     // Boot Sequence Logic
     const bootLines = [
@@ -282,7 +282,7 @@
 
     async function fetchData() {
         try {
-            const res = await fetch(`${API_BASE}/attendees`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } });
+            const res = await fetch(`${API_BASE}/attendees`);
             allData = await res.json();
             renderList(allData);
         } catch(e) {
@@ -346,8 +346,8 @@
             await fetch(`${API_BASE}/submit`, {
                 method: 'POST',
                 headers: {
-                    'Bypass-Tunnel-Reminder': 'true',
-                    'Content-Type': 'application/json'
+                    
+                    'Content-Type': 'text/plain;charset=utf-8'
                 },
                 body: JSON.stringify(payload)
             });
