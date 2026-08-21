@@ -1,0 +1,15 @@
+{
+  "name": "Anti Victim Experience",
+  "short_name": "Anti Victim",
+  "start_url": "/app/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/app-icon.jpg",
+      "sizes": "1024x1024",
+      "type": "image/jpeg"
+    }
+  ]
+}

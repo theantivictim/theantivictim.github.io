@@ -198,6 +198,14 @@
   });
 </script>
 
+
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="/app-icon.jpg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Anti Victim">
+
 </head>
 
 <body>
@@ -366,5 +374,30 @@ function toggleActive(element, realTitleText) {
   }
 }
 </script>
+
+  <!-- PWA Install Prompt -->
+  <div id="pwa-prompt" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(20,20,20,0.8); backdrop-filter: blur(15px); border: 1px solid var(--accent); border-radius: 12px; padding: 20px; z-index: 1000; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <h3 style="margin: 0 0 10px 0; font-family: 'Arial Black', Impact, sans-serif; font-size: 18px; color: #FFF; letter-spacing: 1px;">INSTALL COMPANION APP</h3>
+    <p style="margin: 0 0 15px 0; font-size: 14px; color: #CCC; line-height: 1.4;">Tap the <strong>Share</strong> icon below, then select <strong>Add to Home Screen</strong> for the full native experience.</p>
+    <button onclick="document.getElementById('pwa-prompt').style.display='none'" style="background: var(--accent); color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; text-transform: uppercase;">Dismiss</button>
+  </div>
+  
+  <script>
+    // Detect if running as standalone PWA
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    
+    // Detect iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    
+    // Show prompt if on mobile and NOT already installed
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!isStandalone && window.innerWidth <= 768) {
+        setTimeout(() => {
+          document.getElementById('pwa-prompt').style.display = 'block';
+        }, 1500);
+      }
+    });
+  </script>
+
 </body>
 </html>
