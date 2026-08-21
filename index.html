@@ -29,7 +29,7 @@
         body {
             background-color: var(--bg);
             color: var(--text-main);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
             overflow: hidden;
             user-select: none;
             -webkit-user-select: none;
@@ -167,6 +167,14 @@
             transition: all 0.2s; position: relative; overflow: hidden;
         }
         .auth-btn:hover { background: #FFF; }
+
+        .school-btn {
+            background: transparent;
+            color: var(--neon-danger);
+            border: 1px solid var(--neon-danger);
+            margin-top: 10px;
+        }
+        .school-btn:hover { background: var(--neon-danger); color: #FFF; }
         
         .close-btn { position: absolute; top: 20px; right: 20px; color: var(--text-muted); cursor: pointer; font-size: 24px; }
         
@@ -234,6 +242,7 @@
             <input type="tel" id="m-phone" placeholder="Optional">
         </div>
         <button class="auth-btn" onclick="submitAuth()">AUTHENTICATE USER</button>
+        <button class="auth-btn school-btn" onclick="window.open('https://www.skool.com/', '_blank')">JOIN THE SCHOOL COMMUNITY</button>
     </div>
 </div>
 
@@ -244,7 +253,7 @@
 
 <script>
     let allData = [];
-    const API_BASE = "https://hop-lewis-unfortunately-routing.trycloudflare.com";
+    const API_BASE = "https://mortality-janet-lifetime-colours.trycloudflare.com";
 
     // Boot Sequence Logic
     const bootLines = [
