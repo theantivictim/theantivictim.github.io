@@ -34,15 +34,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        
-        
-            50% { transform: scale(1.1) translate(10vw, -10vh) rotate(90deg); }
-            100% { transform: scale(1.3) translate(-5vw, 15vh) rotate(180deg); }
-        }
-
-            100% { transform: scale(1.2) translate(5vw, 5vh); opacity: 0.8; }
-        }
-
         /* --- BRUTALIST UI --- */
         .ui-layer {
             position: relative; z-index: 100; display: flex; flex-direction: column;
@@ -52,17 +43,12 @@
         header {
             margin-bottom: 50px; text-align: left; border-bottom: 4px solid var(--text-main); padding-bottom: 20px;
         }
-        
         .status-badge {
-            display: inline-block; font-size: 12px; font-weight: 800; padding: 6px 12px;
-            background: var(--accent-yellow); color: #000; margin-bottom: 20px;
-            text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(248, 252, 106, 0.4);
+            display: inline-block; background: var(--accent-yellow); color: #000; font-weight: 900;
+            padding: 4px 12px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 15px;
         }
-        
-        h1.greeting {
-            font-family: 'Climate Crisis', sans-serif; 
-            font-size: clamp(3rem, 12vw, 5rem);
+        .greeting { 
+            font-family: 'Climate Crisis', sans-serif; font-size: 50px; 
             color: var(--text-main); 
             line-height: 0.85; text-transform: uppercase;
             letter-spacing: -0.05em;
@@ -149,14 +135,6 @@
 </head>
 <body>
 
-
-
-    
-    
-    
-</div>
-
-
 <div class="ui-layer">
     <header class="stagger-in delay-1">
         <div class="status-badge" id="tier-badge">AUTHENTICATED</div>
@@ -231,14 +209,6 @@
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("greeting-text").innerHTML = "WELCOME,<br>" + name.toUpperCase();
         document.getElementById("tier-badge").innerText = tier + " CLEARANCE";
-    });
-
-    // Simple Parallax Effect on the Glow
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        if (glowContainer) {
-            glowContainer.style.setProperty('--scroll-y', `${scrolled * 0.4}px`);
-        }
     });
 
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
