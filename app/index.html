@@ -153,7 +153,21 @@
         #pwa-prompt h3 { margin: 0 0 10px 0; font-family: 'Climate Crisis', sans-serif; font-size: 18px; color: var(--accent-yellow); }
         #pwa-prompt p { margin: 0 0 20px 0; font-size: 14px; color: #FFF; line-height: 1.4; font-weight: bold; }
         #pwa-prompt button { background: var(--accent-yellow); color: #000; border: none; padding: 12px 24px; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; width: 100%; }
+    
+        .menu-details {
+            width: 100%; display: none; margin-top: 15px; padding-top: 15px;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+            font-size: 13px; color: #CCC; font-weight: normal; line-height: 1.6;
+            text-transform: none; letter-spacing: 0.5px;
+        }
+        .menu-details ul { margin-left: 20px; margin-bottom: 10px; margin-top: 8px; }
+        .menu-details li { margin-bottom: 5px; }
+        .time-block.expandable { cursor: pointer; flex-wrap: wrap; }
+        .expand-icon { display: inline-block; margin-left: 10px; font-size: 10px; color: var(--accent-yellow); transition: transform 0.2s; vertical-align: middle; }
+        .time-block.expanded .menu-details { display: block; animation: fadeUp 0.3s ease forwards; }
+        .time-block.expanded .expand-icon { transform: rotate(180deg); }
     </style>
+
 </head>
 <body>
 
@@ -190,9 +204,29 @@
             <div class="t-time">9:00 AM</div>
             <div class="t-desc">KEYNOTE: BRIAN</div>
         </div>
-        <div class="time-block">
+        <div class="time-block expandable" onclick="this.classList.toggle('expanded')">
             <div class="t-time" style="color: #FFF;">12:00 PM</div>
-            <div class="t-desc">LUNCH IS SERVED<span class="t-sub">TRAINING ROOM</span></div>
+            <div class="t-desc">
+                LUNCH IS SERVED <span class="expand-icon">▼</span>
+                <span class="t-sub">TRAINING ROOM</span>
+            </div>
+            <div class="menu-details">
+                <strong style="color: #FFF; letter-spacing: 1px; text-transform: uppercase;">Catered by Original ChopShop:</strong>
+                <ul>
+                    <li>The Club Box (w/ Sea Salt Chips)</li>
+                    <li>Moroccan Turkey Box (w/ BBQ Chips)</li>
+                    <li>Grilled Steak Box (w/ BBQ Chips)</li>
+                    <li>Grinder Box</li>
+                    <li>Greek-ish Full Salad [GF, VEG]</li>
+                    <li>Kale Caesar Full Salad</li>
+                    <li>Red Pepper Hummus & Raw Veggies [GF, VEG, V]</li>
+                </ul>
+                <em style="color: #888;">All boxes include a Mini Triple Chocolate Chip Cookie.</em>
+            </div>
+        </div>
+        <div class="time-block">
+            <div class="t-time" style="color: #FFF;">1:00 PM</div>
+            <div class="t-desc">SESSION RESET</div>
         </div>
         <div class="time-block">
             <div class="t-time" style="color: var(--accent-red);">4:00 PM</div>
