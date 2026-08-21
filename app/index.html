@@ -172,16 +172,7 @@
 <body>
 
 
-<svg style="position: absolute; width: 0; height: 0;">
-  <filter id="thermal-displacement">
-    <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="4" result="noise" />
-    <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" in="noise" result="coloredNoise" />
-    <feDisplacementMap in="SourceGraphic" in2="coloredNoise" scale="80" xChannelSelector="R" yChannelSelector="G" />
-  </filter>
-</svg>
 
-<div class="thermal-container" id="parallax-glow">
-    <div class="thermal-orb orb-red"></div>
     <div class="thermal-orb orb-blue"></div>
     <div class="thermal-orb orb-yellow"></div>
     <div class="thermal-orb orb-black"></div>
