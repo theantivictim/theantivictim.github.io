@@ -16,7 +16,7 @@
         }
 
         :root {
-            --bg: #030303;
+            --bg: #FFFFFF;
             --neon-primary: #F8FC6A;
             --neon-danger: #FF0055;
             --text-main: #E0E0E0;
@@ -27,8 +27,8 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: transparent;
+            color: #000000;
             font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
             overflow: hidden;
             user-select: none;
@@ -39,7 +39,7 @@
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 9999; display: flex; flex-direction: column;
-            justify-content: flex-end; padding: 40px; font-size: 14px; color: var(--neon-primary);
+            justify-content: flex-end; padding: 40px; font-size: 14px; color: #000;
             text-shadow: 0 0 5px var(--neon-primary); pointer-events: none;
             transition: opacity 0.8s cubic-bezier(0.86, 0, 0.07, 1);
         }
@@ -82,16 +82,16 @@
         }
         header {
             display: flex; justify-content: space-between; align-items: flex-start;
-            margin-bottom: 40px; border-bottom: 1px solid var(--border-dim); padding-bottom: 20px;
+            margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 20px;
         }
         h1 {
             font-family: 'Climate Crisis', sans-serif; font-size: clamp(3rem, 6vw, 6rem);
-            color: #FFF; line-height: 0.9; text-transform: uppercase;
+            color: #000; line-height: 0.9; text-transform: uppercase;
             letter-spacing: -0.05em; mix-blend-mode: difference;
         }
         .status-badge {
             font-size: 12px; font-weight: 800; padding: 6px 12px;
-            border: 1px solid var(--neon-primary); color: var(--neon-primary);
+            border: 1px solid var(--neon-primary); color: #000;
             text-transform: uppercase; letter-spacing: 2px;
             box-shadow: 0 0 10px rgba(248, 252, 106, 0.2);
             animation: pulse 2s infinite;
@@ -99,13 +99,13 @@
 
         /* --- SEARCH AND LIST --- */
         .search-box {
-            background: transparent; border: 1px solid var(--border-dim);
-            color: var(--neon-primary); font-family: 'JetBrains Mono', monospace;
+            background: transparent; border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            color: #000; font-family: 'JetBrains Mono', monospace;
             font-size: 24px; padding: 20px; width: 100%; max-width: 600px;
             outline: none; text-transform: uppercase; margin-bottom: 30px;
             transition: all 0.3s;
         }
-        .search-box:focus { border-color: var(--neon-primary); box-shadow: 0 0 20px rgba(248, 252, 106, 0.2); }
+        .search-box:focus { border-color: #000; box-shadow: 0 0 20px rgba(248, 252, 106, 0.2); }
         .search-box::placeholder { color: var(--text-muted); }
 
         .list-container {
@@ -118,7 +118,7 @@
 
         /* --- INTERACTIVE CARDS --- */
         .guest-card {
-            background: rgba(10, 10, 10, 0.6); border: 1px solid var(--border-dim);
+            background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             padding: 24px; cursor: pointer; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
             position: relative; overflow: hidden; backdrop-filter: blur(5px);
         }
@@ -129,13 +129,13 @@
         }
         .guest-card:hover {
             transform: translateY(-5px) scale(1.02);
-            border-color: var(--neon-primary);
+            border-color: #000;
             box-shadow: 0 10px 30px rgba(248, 252, 106, 0.1);
         }
         .guest-card:hover::before { left: 100%; }
         
-        .g-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #FFF; text-transform: uppercase; }
-        .g-tier { font-size: 11px; color: var(--neon-primary); letter-spacing: 1px; }
+        .g-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #000; text-transform: uppercase; }
+        .g-tier { font-size: 11px; color: #000; letter-spacing: 1px; }
         
         /* --- GLITCH MODAL --- */
         #modal {
@@ -151,14 +151,14 @@
         }
         .modal-box.glitch-anim { animation: rgbGlitch 0.3s steps(2) forwards; }
         
-        .m-name { font-family: 'Climate Crisis', sans-serif; font-size: 32px; color: var(--neon-primary); line-height: 1; margin-bottom: 20px; text-transform: uppercase; }
+        .m-name { font-family: 'Climate Crisis', sans-serif; font-size: 32px; color: #000; line-height: 1; margin-bottom: 20px; text-transform: uppercase; }
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
         .input-group input { 
-            width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border-dim);
-            color: #FFF; font-family: 'JetBrains Mono'; font-size: 18px; padding: 10px 0; outline: none; transition: 0.3s;
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(0,0,0,0.1);
+            color: #000; font-family: 'JetBrains Mono'; font-size: 18px; padding: 10px 0; outline: none; transition: 0.3s;
         }
-        .input-group input:focus { border-bottom-color: var(--neon-primary); }
+        .input-group input:focus { border-bottom-color: #000; }
         
         .auth-btn {
             background: var(--neon-primary); color: #000; border: none; width: 100%;
@@ -174,7 +174,7 @@
             border: 1px solid var(--neon-danger);
             margin-top: 10px;
         }
-        .school-btn:hover { background: var(--neon-danger); color: #FFF; }
+        .school-btn:hover { background: var(--neon-danger); color: #000; }
         
         .close-btn { position: absolute; top: 20px; right: 20px; color: var(--text-muted); cursor: pointer; font-size: 24px; }
         
@@ -210,13 +210,13 @@
 <!-- Boot Sequence -->
 <div id="boot-screen"></div>
 
-<div class="heatwave-container">
-    <div class="heat-orb orb-1"></div>
-    <div class="heat-orb orb-2"></div>
-    <div class="heat-orb orb-3"></div>
+<div class="heatwave-container" style="opacity: 1; filter: blur(40px);">
+    <div class="heat-orb" style="width: 150vw; height: 150vw; background: radial-gradient(circle, #FF3366 0%, transparent 60%); left: -40%; top: -20%; animation: orbFloat 14s infinite alternate;"></div>
+    <div class="heat-orb" style="width: 120vw; height: 120vw; background: radial-gradient(circle, #FF9933 0%, transparent 60%); right: -20%; bottom: -10%; animation: orbFloat 18s infinite alternate-reverse;"></div>
+    <div class="heat-orb" style="width: 140vw; height: 140vw; background: radial-gradient(circle, #33CCFF 0%, transparent 60%); left: 20%; top: 40%; animation: orbFloat 22s infinite alternate;"></div>
 </div>
-<div class="vignette"></div>
-<div class="scanlines"></div>
+
+
 
 <div class="ui-layer" id="main-ui" style="opacity:0; transition: opacity 1s;">
     <header>
