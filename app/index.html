@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ANTI VICTIM | THE EXPERIENCE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap');
+  :root {
+    --accent: var(--accent);
+    --accent-glow: var(--accent-glow);
+    --bg: #000;
+    --card-bg: #0a0a0a;
+    --text: #FFF;
+    --muted: #888;
+  }
+  * { box-sizing: border-box; }
+  body { 
+    margin: 0; padding: 0; background-color: var(--bg); color: var(--text); 
+    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  
+  .ambient-glow {
+    position: fixed; top: -100px; left: -100px; right: -100px; bottom: -100px;
+    background: radial-gradient(circle at 50% -20%, var(--accent-glow) 0%, transparent 60%);
+    opacity: 0.2; pointer-events: none; z-index: 0;
+    animation: pulse 8s infinite alternate ease-in-out;
+  }
+  @keyframes pulse { 0% { opacity: 0.1; } 100% { opacity: 0.3; } }
+
+  .header {
+    padding: 30px 20px 20px 20px;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 100%);
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .title {
+    font-family: 'Climate Crisis', Impact, sans-serif; font-variation-settings: "YEAR" 1979;
+    font-size: 2.2rem; color: var(--text); margin: 0; text-transform: uppercase;
+    letter-spacing: -1px; line-height: 1; position: relative; z-index: 2;
+  }
+  .subtitle { 
+    font-size: 0.9rem; color: var(--accent); margin-top: 8px; text-transform: uppercase; 
+    font-weight: bold; letter-spacing: 1px;
+  }
+  
+  .container { padding: 30px 20px; position: relative; z-index: 2; }
+  
+  .identity-block {
+    margin-bottom: 40px; display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .greeting { font-size: 1.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: -0.5px; }
+  
+  .pill {
+    background-color: var(--accent); color: #000; font-weight: bold; font-size: 0.8rem; 
+    text-transform: uppercase; padding: 5px 12px; border-radius: 50px; letter-spacing: 1px;
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+  
+  .section-title {
+    font-size: 0.9rem; color: var(--muted); text-transform: uppercase; 
+    font-weight: bold; letter-spacing: 2px; margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+  }
+  
+  /* Parallax Timeline Items */
+  .timeline { padding-bottom: 80px; }
+  
+  .timeline-item {
+    position: relative; background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+    padding: 20px; margin-bottom: 30px; cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s ease-out;
+    overflow: hidden;
+    
+    /* Scroll Reveal Defaults */
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  
+  /* When item scrolls into view */
+  .timeline-item.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  .timeline-item::before {
+    content: ''; position: absolute; top: -50px; left: -50px; width: 100px; height: 100px;
+    background: var(--accent); border-radius: 50%; opacity: 0; filter: blur(40px);
+    transition: all 0.5s ease; pointer-events: none;
+  }
+  
+  .timeline-item:hover {
+    transform: translateY(-4px); border-color: rgba(255,255,255,0.2);
+    background: rgba(20,20,20,1);
+  }
+  
+  .timeline-item.active {
+    border-color: var(--accent);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
+    transform: translateY(-4px) scale(1.02);
+  }
+  .timeline-item.active::before { opacity: 0.2; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0; }
+  
+  /* Unlock Animation */
+  @keyframes flashUnlock {
+    0% { box-shadow: 0 0 0 var(--accent); border-color: var(--accent); }
+    10% { box-shadow: 0 0 50px #0f0; border-color: #0f0; background: rgba(0,255,0,0.1); }
+    20% { box-shadow: 0 0 0 transparent; }
+    30% { box-shadow: 0 0 50px #0f0; border-color: #0f0; background: rgba(0,255,0,0.1); }
+    100% { box-shadow: 0 0 15px var(--accent-glow); border-color: var(--accent); }
+  }
+  
+  @keyframes glitchText {
+    0% { transform: translate(0) }
+    20% { transform: translate(-2px, 2px) }
+    40% { transform: translate(-2px, -2px) }
+    60% { transform: translate(2px, 2px) }
+    80% { transform: translate(2px, -2px) }
+    100% { transform: translate(0) }
+  }
+
+  .timeline-item.unlocking {
+    animation: flashUnlock 1s ease-out forwards;
+  }
+  .timeline-item.unlocking .event-title {
+    animation: glitchText 0.3s infinite;
+    color: #0f0 !important;
+  }
+
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+  .time-col { font-weight: bold; color: var(--accent); font-size: 0.9rem; margin-bottom: 5px; }
+  .event-title { font-size: 1.3rem; font-weight: bold; text-transform: uppercase; letter-spacing: -0.5px; transition: color 0.3s ease; }
+  
+  .arrow { 
+    width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s ease; color: var(--muted);
+  }
+  .timeline-item.active .arrow {
+    transform: rotate(180deg); border-color: var(--accent); color: var(--accent); background: rgba(0,0,0,0.5);
+  }
+  
+  .event-desc-wrapper {
+    display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative; z-index: 2;
+  }
+  .timeline-item.active .event-desc-wrapper { grid-template-rows: 1fr; margin-top: 15px; }
+  
+  .event-desc { overflow: hidden; font-size: 1.05rem; color: #CCC; line-height: 1.5; }
+  .locked .event-title { color: #555; }
+  .locked .time-col { color: #555; }
+  .locked .event-desc { color: #555; font-style: italic; }
+  
+</style>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("n") || "GUEST";
+  const tier = params.get("t") || "Plus One";
+  
+  const accent = (tier === "STAFF") ? "#3366FF" : "#F8FC6A";
+  const accentGlow = (tier === "STAFF") ? "rgba(51,102,255,0.3)" : "rgba(248,252,106,0.3)";
+  
+  document.documentElement.style.setProperty("--accent", accent);
+  document.documentElement.style.setProperty("--accent-glow", accentGlow);
+  
+  document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector(".greeting").innerHTML = "WELCOME,<br>" + name.toUpperCase();
+      document.querySelector(".pill").innerText = tier.toUpperCase();
+  });
+</script>
+
+</head>
+<body>
+
+<div class="ambient-glow"></div>
+
+<div class="header">
+  <h1 class="title">ANTI VICTIM</h1>
+  <div class="subtitle">THE EXPERIENCE</div>
+</div>
+
+<div class="container">
+  <div class="identity-block">
+    <div class="greeting">WELCOME,<br>GUEST</div>
+    <div class="pill">PLUS ONE</div>
+  </div>
+
+  <div class="section-title">TODAY'S LINEUP</div>
+  
+  <div class="timeline">
+    
+    <div class="timeline-item" onclick="toggleActive(this)">
+      <div class="header-row">
+        <div>
+          <div class="time-col">09:00 AM</div>
+          <div class="event-title">THE KICKOFF</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="event-desc-wrapper">
+        <div class="event-desc">Step into the room. High energy, zero excuses. It starts now.</div>
+      </div>
+    </div>
+    
+    <div class="timeline-item" onclick="toggleActive(this)">
+      <div class="header-row">
+        <div>
+          <div class="time-col">12:00 PM</div>
+          <div class="event-title">REFUEL</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="event-desc-wrapper">
+        <div class="event-desc">Lunch is served in the training room kitchen. Grab your food, connect, and recharge. Need a quick break? The center atrium is open all day for coffee, drinks, and AC.</div>
+      </div>
+    </div>
+    
+    <div class="timeline-item" onclick="toggleActive(this)">
+      <div class="header-row">
+        <div>
+          <div class="time-col">12:30 PM</div>
+          <div class="event-title">THE ACCELERATION</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="event-desc-wrapper">
+        <div class="event-desc">We turn the heat up. The most critical insights of the day drop now.</div>
+      </div>
+    </div>
+    
+    <!-- Livelock Event -->
+    <div class="timeline-item locked" data-locked="true" onclick="toggleActive(this, 'Happy Hour')">
+      <div class="header-row">
+        <div>
+          <div class="time-col">04:00 PM</div>
+          <div class="event-title">ENCRYPTED DATA</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="event-desc-wrapper">
+        <div class="event-desc">Happy Hour at the Atrium. Drinks, connections, and raw conversations.</div>
+      </div>
+    </div>
+    
+    <!-- Livelock Event -->
+    <div class="timeline-item locked" data-locked="true" onclick="toggleActive(this, 'The Vault (Speakeasy)')">
+      <div class="header-row">
+        <div>
+          <div class="time-col">05:30 PM</div>
+          <div class="event-title">ENCRYPTED DATA</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="event-desc-wrapper">
+        <div class="event-desc">The Vault (Speakeasy). VIP Access. Follow the path.</div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+// Scroll Reveal Observer
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      // Optional: unobserve if we only want it to animate once
+      // observer.unobserve(entry.target); 
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.timeline-item').forEach(el => {
+  observer.observe(el);
+});
+
+// Click Interaction & Unlock Animation
+function toggleActive(element, realTitleText) {
+  const isLocked = element.getAttribute('data-locked') === 'true';
+  
+  if (isLocked) {
+    // Perform unlocking sequence
+    element.classList.remove('locked');
+    element.classList.add('unlocking');
+    element.setAttribute('data-locked', 'false');
+    
+    const title = element.querySelector('.event-title');
+    const time = element.querySelector('.time-col');
+    
+    title.innerText = "ACCESS GRANTED...";
+    time.style.color = "#0f0";
+    
+    // After animation finishes (1s)
+    setTimeout(() => {
+      title.innerText = realTitleText;
+      title.style.color = ""; // reset to default active glow
+      time.style.color = ""; 
+      
+      element.classList.remove('unlocking');
+      element.classList.add('active');
+    }, 1000);
+    
+  } else {
+    // Normal toggle behavior
+    const isActive = element.classList.contains('active');
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    if (!isActive) {
+      element.classList.add('active');
+    }
+  }
+}
+</script>
+</body>
+</html>

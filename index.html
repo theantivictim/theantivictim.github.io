@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ANTI VICTIM | ACCESS TERMINAL</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap');
+  :root {
+    --accent: #F8FC6A;
+    --accent-glow: rgba(248, 252, 106, 0.5);
+    --bg: #030303;
+  }
+  * { box-sizing: border-box; }
+  body { 
+    margin: 0; padding: 0; background-color: var(--bg); color: #FFF; 
+    font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100vh; overflow: hidden;
+  }
+  
+  .ambient-glow {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 50%, var(--accent-glow) 0%, transparent 60%);
+    opacity: 0.2; pointer-events: none; z-index: 0;
+    animation: pulse 5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes pulse { 0% { transform: scale(0.9); opacity: 0.15; } 100% { transform: scale(1.1); opacity: 0.35; } }
+  
+  .container { 
+    width: 90%; max-width: 650px; text-align: left; position: relative; z-index: 2; 
+    background: rgba(10, 10, 10, 0.6); padding: 50px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px var(--accent-glow);
+    transition: all 0.5s ease;
+  }
+  
+  .staff-mode .container {
+    --accent: #3366FF;
+    --accent-glow: rgba(51, 102, 255, 0.6);
+  }
+  
+  h1 {
+    font-family: 'Climate Crisis', Impact, sans-serif; font-variation-settings: "YEAR" 1979;
+    font-size: 3.5rem; margin-bottom: 0.2rem; margin-top: 0; text-transform: uppercase;
+    color: var(--accent); line-height: 1.1; letter-spacing: -2px;
+    text-shadow: 0 0 25px var(--accent-glow);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+  }
+  
+  p { color: #AAA; font-size: 1.2rem; margin-bottom: 2.5rem; text-transform: uppercase; letter-spacing: 5px; font-weight: bold; }
+  
+  form { display: flex; flex-direction: column; gap: 2.5rem; }
+  .input-group { position: relative; }
+  .input-group label {
+    display: block; font-size: 0.85rem; font-weight: bold; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 2px;
+    transition: color 0.5s ease;
+  }
+  
+  input {
+    background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.1);
+    color: #FFF; font-size: 2.2rem; padding: 0.5rem 0; font-family: Helvetica, sans-serif; font-weight: bold;
+    outline: none; width: 100%; transition: border-color 0.3s ease;
+  }
+  input::placeholder { color: rgba(255,255,255,0.15); font-size: 2rem; font-weight: normal; }
+  
+  .input-group::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+    background: var(--accent); box-shadow: 0 0 15px var(--accent);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  input:focus + .input-group::after, .input-group:focus-within::after { transform: scaleX(1); }
+  
+  #autocomplete-list {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 99;
+    background: rgba(10, 10, 10, 0.95); border: 1px solid var(--accent); 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+    backdrop-filter: blur(15px); max-height: 250px; overflow-y: auto; display: none;
+    border-radius: 0 0 12px 12px; margin-top: 5px;
+  }
+  .autocomplete-item { padding: 1.2rem 1.5rem; cursor: pointer; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.2s ease; }
+  .autocomplete-item:hover { background: var(--accent); color: #000; font-weight: bold; padding-left: 2rem; box-shadow: inset 5px 0 0 rgba(0,0,0,0.2); }
+  
+  #secondary-fields { display: none; flex-direction: column; gap: 2.5rem; animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  
+  button {
+    background: transparent; color: var(--accent); border: 2px solid var(--accent);
+    padding: 1.5rem; font-size: 1.3rem; font-weight: bold; text-transform: uppercase; cursor: pointer;
+    letter-spacing: 4px; position: relative; overflow: hidden;
+    transition: all 0.3s ease; box-shadow: inset 0 0 15px var(--accent-glow);
+    border-radius: 8px; margin-top: 1rem; font-family: Helvetica, sans-serif;
+  }
+  button:hover { background: var(--accent); color: #000; box-shadow: 0 0 40px var(--accent-glow); }
+  
+  /* Success Glitch */
+  @keyframes glitch {
+    0% { transform: translate(0) }
+    20% { transform: translate(-3px, 3px) }
+    40% { transform: translate(-3px, -3px) }
+    60% { transform: translate(3px, 3px) }
+    80% { transform: translate(3px, -3px) }
+    100% { transform: translate(0) }
+  }
+  
+  
+  #success { 
+    display: none; text-align: center; position: relative; overflow: hidden;
+    box-shadow: 0 0 100px var(--accent-glow), inset 0 0 50px var(--accent-glow);
+    border-color: var(--accent);
+  }
+  #success h1 { font-size: clamp(2rem, 7vw, 4rem); line-height: 1; margin-bottom: 20px; animation: glitch 0.15s infinite alternate; text-shadow: 0 0 40px var(--accent-glow); }
+  #success p { color: #FFF; text-shadow: 0 0 10px rgba(255,255,255,0.5); font-size: 1.4rem; }
+  
+  @keyframes flashSweep {
+    0% { left: -150%; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: 150%; opacity: 0; }
+  }
+  
+  #success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transform: skewX(-30deg);
+    animation: flashSweep 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+    z-index: 10;
+  }
+</style>
+
+</head>
+<body>
+
+<div class="ambient-glow"></div>
+
+<div class="container" id="form-container">
+  <h1 id="header-title">ANTI VICTIM</h1>
+  <p id="header-subtitle">ACCESS TERMINAL</p>
+  <form id="checkin-form" autocomplete="off">
+    <div class="input-group">
+      <label>IDENTIFICATION</label>
+      <input type="text" id="name" placeholder="ENTER YOUR NAME..." required>
+      <div id="autocomplete-list"></div>
+    </div>
+    <div id="secondary-fields">
+      <div class="input-group" id="host-group" style="display:none;">
+        <label>SPONSOR (HOST)</label>
+        <input type="text" id="attending_with" placeholder="WHO ARE YOU WITH?">
+      </div>
+      <div class="input-group">
+        <label>TRANSMISSION EMAIL</label>
+        <input type="email" id="email" placeholder="ENTER EMAIL" required>
+      </div>
+      <div class="input-group">
+        <label>SECURE COMMS (PHONE)</label>
+        <input type="tel" id="phone" placeholder="ENTER PHONE" required>
+      </div>
+      <button type="submit" id="submit-btn">INITIALIZE ACCESS</button>
+    </div>
+  </form>
+</div>
+
+<div class="container" id="success">
+  <h1 id="success-title">ACCESS<br>GRANTED</h1>
+  <p id="success-subtitle">THE APP HAS BEEN TRANSMITTED TO YOUR DEVICE.</p>
+</div>
+
+<script>
+let attendees = [];
+let selectedAttendee = null;
+
+async function fetchAttendees() {
+  try {
+    const res = await fetch('/attendees');
+    attendees = await res.json();
+  } catch(err) {
+    console.error("Failed to load attendees");
+  }
+}
+fetchAttendees();
+
+const nameInput = document.getElementById('name');
+const autocompleteList = document.getElementById('autocomplete-list');
+const secondaryFields = document.getElementById('secondary-fields');
+const hostGroup = document.getElementById('host-group');
+const formContainer = document.getElementById('form-container');
+
+nameInput.addEventListener('input', function() {
+  const val = this.value.toLowerCase();
+  autocompleteList.innerHTML = '';
+  selectedAttendee = null; 
+  document.body.classList.remove('staff-mode');
+  
+  if (!val) {
+    autocompleteList.style.display = 'none';
+    secondaryFields.style.display = 'none';
+    return;
+  }
+  
+  const matches = attendees.filter(a => a.name.toLowerCase().includes(val));
+  
+  if (matches.length > 0) {
+    autocompleteList.style.display = 'block';
+    matches.forEach(att => {
+      const div = document.createElement('div');
+      div.className = 'autocomplete-item';
+      div.innerText = att.name;
+      div.addEventListener('click', function() {
+        nameInput.value = att.name;
+        selectedAttendee = att;
+        autocompleteList.style.display = 'none';
+        
+        secondaryFields.style.display = 'flex';
+        hostGroup.style.display = 'none';
+        document.getElementById('attending_with').required = false;
+        
+        document.getElementById('email').value = att.email || '';
+        document.getElementById('phone').value = att.phone || '';
+        
+        if(att.tier === 'STAFF') {
+            document.body.classList.add('staff-mode');
+        }
+        
+        if(!att.email) document.getElementById('email').focus();
+        else if(!att.phone) document.getElementById('phone').focus();
+        else document.getElementById('submit-btn').focus();
+      });
+      autocompleteList.appendChild(div);
+    });
+  } else {
+    autocompleteList.style.display = 'none';
+    secondaryFields.style.display = 'flex';
+    hostGroup.style.display = 'block';
+    document.getElementById('attending_with').required = true;
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (e.target !== nameInput) {
+    autocompleteList.style.display = 'none';
+    if (nameInput.value && !selectedAttendee) {
+       secondaryFields.style.display = 'flex';
+       hostGroup.style.display = 'block';
+       document.getElementById('attending_with').required = true;
+    }
+  }
+});
+
+document.getElementById('checkin-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const attending_with = document.getElementById('attending_with').value;
+  
+  const btn = document.getElementById('submit-btn');
+  btn.innerText = 'PROCESSING DATA...';
+  
+  const payload = {
+      name, email, phone, attending_with,
+      row_index: selectedAttendee ? selectedAttendee.row_index : null,
+      tier: selectedAttendee ? selectedAttendee.tier : 'Plus One'
+  };
+  
+  try {
+    const res = await fetch('/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    
+    if(res.ok) {
+      document.getElementById('form-container').style.display = 'none';
+      const successDiv = document.getElementById('success');
+      const title = document.getElementById('success-title');
+      const sub = document.getElementById('success-subtitle');
+      
+      successDiv.style.display = 'block';
+      if(result.tier === 'STAFF') {
+          title.innerHTML = 'TEAM<br>AUTHENTICATED';
+          sub.innerText = 'CHECK YOUR DEVICE FOR COMMS.';
+      } else {
+          title.innerHTML = 'ACCESS<br>GRANTED';
+          sub.innerText = 'THE APP HAS BEEN TRANSMITTED TO YOUR DEVICE.';
+      }
+      
+      setTimeout(() => {
+        document.getElementById('form-container').style.display = 'block';
+        successDiv.style.display = 'none';
+        e.target.reset();
+        secondaryFields.style.display = 'none';
+        btn.innerText = 'INITIALIZE ACCESS';
+        document.body.classList.remove('staff-mode');
+        selectedAttendee = null;
+      }, 4500);
+    }
+  } catch(err) {
+    alert('Error connecting to system.');
+    btn.innerText = 'INITIALIZE ACCESS';
+  }
+});
+</script>
+</body>
+</html>
