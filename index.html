@@ -253,7 +253,7 @@
 
 <script>
     let allData = [];
-    const API_BASE = "https://mortality-janet-lifetime-colours.trycloudflare.com";
+    const API_BASE = "https://antivictim-api.loca.lt";
 
     // Boot Sequence Logic
     const bootLines = [
@@ -282,7 +282,7 @@
 
     async function fetchData() {
         try {
-            const res = await fetch(`${API_BASE}/attendees`);
+            const res = await fetch(`${API_BASE}/attendees`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } });
             allData = await res.json();
             renderList(allData);
         } catch(e) {
@@ -345,6 +345,10 @@
         try {
             await fetch(`${API_BASE}/submit`, {
                 method: 'POST',
+                headers: {
+                    'Bypass-Tunnel-Reminder': 'true',
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(payload)
             });
             closeModal();
